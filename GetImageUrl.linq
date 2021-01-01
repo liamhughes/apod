@@ -7,11 +7,11 @@
   <Namespace>System.Threading.Tasks</Namespace>
 </Query>
 
-private const string EXAMPLE_URL = "https://apod.nasa.gov/apod/ap201225.html";
+private const string EXAMPLE_PAGE_URL = "https://apod.nasa.gov/apod/ap201225.html";
 
 async Task Main()
 {
-	var imageUrl = await GetImageUrl(EXAMPLE_URL);
+	var imageUrl = await GetImageUrl(EXAMPLE_PAGE_URL);
 	
 	imageUrl.Dump();
 }
