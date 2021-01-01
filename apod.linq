@@ -16,6 +16,8 @@ const int MINIMUM_WIDTH = 1920;
 async Task Main()
 {
 	var history = LoadHistory();
+	
+	Directory.CreateDirectory(GetImageDirectoryPath());
 		
 	var entries = await GetEntriesAsync();
 	
@@ -71,8 +73,7 @@ async Task Main()
 			continue;
 		}
 		
-			
-		"Saving and setting".Dump();
+		SaveImage(imageUrl, imageStream);			
 				
 		
 		OutputBreakAndSetProcessed(historyEntry);
@@ -84,7 +85,10 @@ async Task Main()
 }
 
 string GetFullHistoryPath()
-	=> Path.Combine(Path.GetDirectoryName(Util.CurrentQueryPath), HISTORY_FILE_NAME);
+	=> Path.Combine(GetScriptDirectoryPath(), HISTORY_FILE_NAME);
+	
+string GetImageDirectoryPath()
+	=> Path.Combine(GetScriptDirectoryPath(), "images");
 	
 HistoryEntry GetOrCreateHistoryEntry(List<HistoryEntry> history, string pageUrl)
 {
@@ -102,6 +106,8 @@ HistoryEntry GetOrCreateHistoryEntry(List<HistoryEntry> history, string pageUrl)
 
 	return historyEntry;
 }
+
+string GetScriptDirectoryPath() => Path.GetDirectoryName(Util.CurrentQueryPath);
 
 List<HistoryEntry> LoadHistory()
 {
@@ -128,6 +134,21 @@ void SaveHistory(List<HistoryEntry> history)
 	var historyJson = JsonConvert.SerializeObject(history, Newtonsoft.Json.Formatting.Indented);
 
 	File.WriteAllText(historyPath, historyJson);
+}
+
+void SaveImage(string imageUrl, Stream imageStream)
+{
+	var imageFileName = new Flurl.Url(imageUrl).PathSegments[^1];
+	
+	imageFileName.Dump();
+		
+	var imageFullPath = Path.Combine(GetImageDirectoryPath(), imageFileName);
+
+	using (var fileStream = new FileStream(imageFullPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+	{
+		imageStream.Seek(0, SeekOrigin.Begin);
+		imageStream.CopyTo(fileStream);
+	}
 }
 
 class HistoryEntry
