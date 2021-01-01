@@ -3,10 +3,13 @@
 </Query>
 
 #load ".\GetEntries"
+#load ".\GetImageUrl"
 
 async Task Main()
 {
 	var entries = await GetEntriesAsync();
 	
-	entries.Dump();
+	var imageUrls = entries.Select(async e => await GetImageUrl(e));
+	
+	imageUrls.Dump();
 }

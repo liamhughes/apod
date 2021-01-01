@@ -28,7 +28,7 @@ public async Task<IEnumerable<string>> GetEntriesAsync()
 	
 	var entryURLs = rssEntries.Select(e => RssEntryToURL(e));
 	
-	return entryURLs.Where(u => u != GENERAL_URL);
+	return entryURLs.Where(u => u != GENERAL_URL).OrderBy(u => u);
 }
 
 private async Task<string> GetRssString()
