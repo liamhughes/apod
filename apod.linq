@@ -8,6 +8,7 @@
 #load ".\GetEntries"
 #load ".\GetImageStream"
 #load ".\GetImageUrl"
+#load ".\SetWallpaper"
 
 const string HISTORY_FILE_NAME = "history.json";
 const int MINIMUM_HEIGHT = 1200;
@@ -73,8 +74,9 @@ async Task Main()
 			continue;
 		}
 		
-		SaveImage(imageUrl, imageStream);			
+		var imageFilePath = SaveImage(imageUrl, imageStream);			
 				
+		SetWallpaper(imageFilePath);
 		
 		OutputBreakAndSetProcessed(historyEntry);
 		
@@ -136,7 +138,7 @@ void SaveHistory(List<HistoryEntry> history)
 	File.WriteAllText(historyPath, historyJson);
 }
 
-void SaveImage(string imageUrl, Stream imageStream)
+string SaveImage(string imageUrl, Stream imageStream)
 {
 	var imageFileName = new Flurl.Url(imageUrl).PathSegments[^1];
 	
@@ -149,6 +151,8 @@ void SaveImage(string imageUrl, Stream imageStream)
 		imageStream.Seek(0, SeekOrigin.Begin);
 		imageStream.CopyTo(fileStream);
 	}
+	
+	return imageFullPath;
 }
 
 class HistoryEntry
