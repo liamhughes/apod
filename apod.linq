@@ -73,7 +73,7 @@ async Task Main()
 		
 			
 		"Saving and setting".Dump();
-		
+				
 		
 		OutputBreakAndSetProcessed(historyEntry);
 		
@@ -83,15 +83,9 @@ async Task Main()
 	SaveHistory(history);
 }
 
-void SaveHistory(List<HistoryEntry> history)
-{
-	var historyPath = GetFullHistoryPath();
-
-	var historyJson = JsonConvert.SerializeObject(history, Newtonsoft.Json.Formatting.Indented); 
+string GetFullHistoryPath()
+	=> Path.Combine(Path.GetDirectoryName(Util.CurrentQueryPath), HISTORY_FILE_NAME);
 	
-	File.WriteAllText(historyPath, historyJson);
-}
-
 HistoryEntry GetOrCreateHistoryEntry(List<HistoryEntry> history, string pageUrl)
 {
 	var historyEntry = history.SingleOrDefault(e => e.PageURL == pageUrl);
@@ -109,9 +103,6 @@ HistoryEntry GetOrCreateHistoryEntry(List<HistoryEntry> history, string pageUrl)
 	return historyEntry;
 }
 
-string GetFullHistoryPath() 
-	=> Path.Combine(Path.GetDirectoryName(Util.CurrentQueryPath), HISTORY_FILE_NAME);
-
 List<HistoryEntry> LoadHistory()
 {
 	var historyPath = GetFullHistoryPath();
@@ -128,6 +119,15 @@ void OutputBreakAndSetProcessed(HistoryEntry historyEntry)
 {
 	new String('-', 10).Dump();
 	historyEntry.Processed = true;
+}
+
+void SaveHistory(List<HistoryEntry> history)
+{
+	var historyPath = GetFullHistoryPath();
+
+	var historyJson = JsonConvert.SerializeObject(history, Newtonsoft.Json.Formatting.Indented);
+
+	File.WriteAllText(historyPath, historyJson);
 }
 
 class HistoryEntry
