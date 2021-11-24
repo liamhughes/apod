@@ -17,6 +17,8 @@ const int MINIMUM_WIDTH = 1920;
 
 async Task Main()
 {
+	Util.AutoScrollResults = true;
+	
 	if (!IsAdmin())
 	{
 		"Not admin.".Dump();
@@ -60,7 +62,7 @@ async Task Main()
 		
 		var image = Image.FromStream(imageStream);
 
-		image.Dump();
+		image.Dump(Util.ScaleMode.ResizeTo(null, 400));
 
 		$"{image.Width} x {image.Height}".Dump();
 		
