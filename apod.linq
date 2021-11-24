@@ -3,6 +3,7 @@
   <Namespace>Newtonsoft.Json</Namespace>
   <Namespace>System.Drawing</Namespace>
   <Namespace>System.Globalization</Namespace>
+  <Namespace>System.Security.Principal</Namespace>
 </Query>
 
 #load ".\GetEntries"
@@ -16,6 +17,12 @@ const int MINIMUM_WIDTH = 1920;
 
 async Task Main()
 {
+	if (!IsAdmin())
+	{
+		"Not admin.".Dump();
+		return;
+	}
+	
 	var history = LoadHistory();
 	
 	Directory.CreateDirectory(GetImageDirectoryPath());
@@ -110,6 +117,13 @@ HistoryEntry GetOrCreateHistoryEntry(List<HistoryEntry> history, string pageUrl)
 }
 
 string GetScriptDirectoryPath() => Path.GetDirectoryName(Util.CurrentQueryPath);
+
+public static bool IsAdmin()
+{
+	var identity = WindowsIdentity.GetCurrent();
+	var principal = new WindowsPrincipal(identity);
+	return principal.IsInRole(WindowsBuiltInRole.Administrator);
+}
 
 List<HistoryEntry> LoadHistory()
 {

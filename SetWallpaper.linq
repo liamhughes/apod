@@ -32,4 +32,8 @@ public void SetWallpaper(string filePath)
 		0,
 		filePath,
 		SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+				
+	var lockScreenKey = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP");
+	
+	lockScreenKey.SetValue("LockScreenImagePath", filePath);	
 }
