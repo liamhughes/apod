@@ -42,7 +42,7 @@ async Task Main()
 		if (historyEntry.Processed)
 		{
 			"Already processed.".Dump();
-			OutputBreakAndSetProcessed(historyEntry);
+			OutputBreak();
 			continue;
 		}
 
@@ -50,7 +50,7 @@ async Task Main()
 		
 		if (imageUrl == null)
 		{
-			OutputBreakAndSetProcessed(historyEntry);
+			OutputBreak();
 			continue;
 		}
 		
@@ -139,9 +139,14 @@ List<HistoryEntry> LoadHistory()
 	return JsonConvert.DeserializeObject<List<HistoryEntry>>(historyJson);
 }
 
-void OutputBreakAndSetProcessed(HistoryEntry historyEntry)
+void OutputBreak()
 {
 	new String('-', 10).Dump();
+}
+
+void OutputBreakAndSetProcessed(HistoryEntry historyEntry)
+{
+	OutputBreak();
 	historyEntry.Processed = true;
 }
 
