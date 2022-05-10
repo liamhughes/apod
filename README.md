@@ -9,4 +9,4 @@ A quick script for setting Windows desktop wallpaper from NASA's Astronomy Pictu
 
 ## How to Run
 
-* Run `apod.linq` via LINQPad or `lprun`.
+* Run `apod.linq` via LINQPad.
