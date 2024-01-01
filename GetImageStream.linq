@@ -1,9 +1,9 @@
 <Query Kind="Program">
-  <NuGetReference>Flurl.Http</NuGetReference>
+  <NuGetReference Version="3.2.4">Flurl.Http</NuGetReference>
   <Namespace>Flurl</Namespace>
   <Namespace>Flurl.Http</Namespace>
-  <Namespace>System.Threading.Tasks</Namespace>
   <Namespace>System.Drawing</Namespace>
+  <Namespace>System.Threading.Tasks</Namespace>
 </Query>
 
 private const string EXAMPLE_IMAGE_URL = "https://apod.nasa.gov/apod/image/2012/WinterSceneBlock.jpg";

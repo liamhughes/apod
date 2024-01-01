@@ -1,9 +1,10 @@
 <Query Kind="Program">
-  <Namespace>System.Threading.Tasks</Namespace>
+  <NuGetReference>Newtonsoft.Json</NuGetReference>
   <Namespace>Newtonsoft.Json</Namespace>
   <Namespace>System.Drawing</Namespace>
   <Namespace>System.Globalization</Namespace>
   <Namespace>System.Security.Principal</Namespace>
+  <Namespace>System.Threading.Tasks</Namespace>
 </Query>
 
 #load ".\GetEntries"
