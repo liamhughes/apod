@@ -19,5 +19,5 @@ async Task Main()
 
 public async Task<Stream> GetImageStream(string imageUrl)
 {
-	return await new Flurl.Url(imageUrl).WithTimeout(TimeSpan.FromMinutes(3)).GetStreamAsync();
+	return await new Flurl.Url(imageUrl).WithTimeout(TimeSpan.FromMinutes(10)).GetStreamAsync();
 }
